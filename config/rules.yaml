@@ -1,0 +1,118 @@
+alerts:
+  thunderstorm:
+    name: "Грозовая активность"
+    conditions:
+      li_proxy: { stat: "min", op: "<", threshold: -2.0 }      # Реальный LI: < -2 = нестабильно
+      shear_0_3km: { stat: "max", op: ">", threshold: 12.0 }   # Сдвиг ветра > 12 м/с
+      moisture_avail: { stat: "mean", op: ">", threshold: 25.0 } # Влажность
+    logic: "AND"
+    base_severity: "warning"
+    phases:
+      critical: ["flowering", "grain_fill"]
+      warning: ["emergence", "tillering"]
+      info: ["harvest", "off_season"]
+
+  hail:
+    name: "Град"
+    conditions:
+      tt_index: { stat: "max", op: ">", threshold: 45.0 }      # Total Totals > 45 = высокий риск града
+      cape_proxy: { stat: "max", op: ">", threshold: 1000.0 }  # CAPE > 1000 Дж/кг
+      shear_0_3km: { stat: "max", op: ">", threshold: 15.0 }   # Усиленный сдвиг для града
+    logic: "AND"
+    base_severity: "warning"
+    phases:
+      critical: ["emergence", "flowering"]
+      warning: ["grain_fill"]
+      info: ["harvest", "off_season"]
+
+  heatwave:
+    name: "Волна жары"
+    conditions:
+      "2t": { stat: "mean", op: ">=", threshold: 35 }
+    base_severity: "warning"
+    phases:
+      critical: ["flowering", "grain_fill"]
+      warning: ["emergence", "tillering"]
+      info: ["harvest", "off_season"]
+
+  coldwave:
+    name: "Волна холода"
+    conditions:
+      "2t": { stat: "mean", op: "<=", threshold: 10 }
+    base_severity: "warning"
+    phases:
+      critical: ["emergence", "flowering"]
+      warning: ["grain_fill", "tillering"]
+      info: ["harvest", "off_season"]
+
+  frost:
+    name: "Заморозки"
+    conditions:
+      "2t": { stat: "min", op: "<=", threshold: 0 }
+    base_severity: "warning"
+    phases:
+      critical: ["flowering", "emergence"]
+      warning: ["grain_fill", "tillering"]
+      info: ["harvest", "off_season"]
+
+  snow:
+    name: "Снег"
+    conditions:
+      "2t": { stat: "min", op: "<=", threshold: 0 }
+      tp: { stat: "delta_6h", op: ">", threshold: 0.5 }
+    logic: "AND"
+    base_severity: "warning"
+    phases:
+      critical: ["flowering"]
+      warning: ["grain_fill", "harvest"]
+      info: ["off_season"]
+
+  strong_wind:
+    name: "Сильный ветер"
+    conditions:
+      wind_speed: { stat: "max", op: ">", threshold: 15 }
+    base_severity: "warning"
+    phases:
+      critical: ["grain_fill", "harvest"]
+      warning: ["emergence", "flowering"]
+      info: ["off_season"]
+
+  drought:
+    name: "Засуха"
+    conditions:
+      vsw1: { stat: "mean", op: "<", threshold: 15 }
+    base_severity: "warning"
+    phases:
+      critical: ["flowering", "grain_fill"]
+      warning: ["emergence"]
+      info: ["harvest", "off_season"]
+
+  heavy_rain:
+    name: "Избыток осадков"
+    conditions:
+      tp: { stat: "delta_6h", op: ">", threshold: 15 }
+    base_severity: "warning"
+    phases:
+      critical: ["flowering"]
+      warning: ["grain_fill", "harvest"]
+      info: ["emergence", "off_season"]
+
+  soil_moisture:
+    name: "Влажность почвы"
+    conditions:
+      vsw1: { stat: "mean", op: "<", threshold: 20 }
+    base_severity: "info"
+    phases:
+      critical: ["flowering"]
+      warning: ["emergence", "grain_fill"]
+      info: ["harvest", "off_season"]
+
+  wind_dir:
+    name: "Направление ветра"
+    conditions:
+      wind_speed: { stat: "max", op: ">", threshold: 10 }
+    base_severity: "warning"
+    phases:
+      critical: ["flowering", "grain_fill"]
+      warning: ["emergence"]
+      info: ["harvest", "off_season"]

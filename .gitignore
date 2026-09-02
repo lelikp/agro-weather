@@ -1,0 +1,8 @@
+data/
+output/
+logs/
+__pycache__/
+*.pyc
+*.session
+run_daily.bat
+.vs/

@@ -1,0 +1,100 @@
+meta:
+  region: "Pampa Húmeda, Argentina"
+  bbox:
+    north: -30.0
+    south: -38.5
+    west: -64.5
+    east: -57.0
+  timezone: "America/Argentina/Buenos_Aires"
+  aifs_grid_res_deg: 0.25
+
+regions:
+  norte_ba:
+    name_en: "North Buenos Aires"
+    name_es: "Norte de Buenos Aires"
+    priority: 1
+    stations:
+      - wmo: 87548
+        name: "Junín Aero"
+        lat: -34.55
+        lon: -60.93
+        elev_m: 81
+      - wmo: 87544
+        name: "Pehuajó Aero"
+        lat: -35.82
+        lon: -61.87
+        elev_m: 115
+
+  sur_ba_la_pampa:
+    name_en: "South Buenos Aires & East La Pampa"
+    name_es: "Sur de Buenos Aires / Este de La Pampa"
+    priority: 1
+    stations:
+      - wmo: 87563
+        name: "Las Flores"
+        lat: -35.95
+        lon: -60.08
+        elev_m: 45
+      - wmo: 87645
+        name: "Tandil Aero"
+        lat: -37.23
+        lon: -59.10
+        elev_m: 175
+      - wmo: 87623
+        name: "Coronel Suárez Aero"
+        lat: -37.43
+        lon: -61.87
+        elev_m: 225
+
+  entre_rios:
+    name_en: "Entre Ríos"
+    name_es: "Entre Ríos"
+    priority: 1
+    stations:
+      - wmo: 87374
+        name: "Paraná Aero"
+        lat: -31.79
+        lon: -60.48
+        elev_m: 78
+
+  santa_fe:
+    name_en: "South Santa Fe"
+    name_es: "Santa Fe (sur)"
+    priority: 1
+    stations:
+      - wmo: 87360
+        name: "Rafaela Aero"
+        lat: -31.25
+        lon: -61.48
+        elev_m: 99
+      - wmo: 87480
+        name: "Rosario Aero"
+        lat: -32.90
+        lon: -60.78
+        elev_m: 25
+
+  cordoba:
+    name_en: "Central/South Córdoba"
+    name_es: "Córdoba (centro/sur)"
+    priority: 1
+    stations:
+      - wmo: 87344
+        name: "Córdoba Aero"
+        lat: -31.32
+        lon: -64.22
+        elev_m: 474
+      - wmo: 87453
+        name: "Río Cuarto Aero"
+        lat: -33.08
+        lon: -64.27
+        elev_m: 445
+      - wmo: 87467
+        name: "Marcos Juárez Aero"
+        lat: -32.68
+        lon: -62.15
+        elev_m: 115
+      - wmo: 87534
+        name: "Laboulaye"
+        lat: -34.13
+        lon: -63.38
+        elev_m: 117

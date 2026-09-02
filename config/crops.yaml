@@ -1,0 +1,24 @@
+crops:
+  soy:
+    emergence: { start: "10-15", end: "11-15" }
+    vegetative: { start: "11-16", end: "12-19" }
+    flowering: { start: "12-20", end: "01-20" }
+    grain_fill: { start: "01-21", end: "03-15" }
+    harvest: { start: "03-16", end: "05-30" }
+  corn:
+    emergence: { start: "10-01", end: "11-01" }
+    vegetative: { start: "11-02", end: "12-14" }
+    flowering: { start: "12-15", end: "01-15" }
+    grain_fill: { start: "01-16", end: "03-01" }
+    harvest: { start: "03-02", end: "06-01" }
+  wheat:
+    tillering: { start: "06-01", end: "08-31" }
+    heading: { start: "09-01", end: "10-01" }
+    grain_fill: { start: "10-02", end: "11-15" }
+    harvest: { start: "11-16", end: "01-15" }
+  sunflower:
+    emergence: { start: "09-15", end: "10-15" }
+    vegetative: { start: "10-16", end: "11-14" }
+    flowering: { start: "11-15", end: "12-20" }
+    grain_fill: { start: "12-21", end: "02-01" }
+    harvest: { start: "02-02", end: "05-01" }
