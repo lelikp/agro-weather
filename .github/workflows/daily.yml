@@ -44,7 +44,7 @@ jobs:
 
       - name: Fetch AIFS
         shell: bash -l {0}
-        run: python src/fetch_aifs.py
+        run: python fetch.py
 
       - name: Process grid
         shell: bash -l {0}
