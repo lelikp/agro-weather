@@ -42,7 +42,7 @@ jobs:
           DROPBOX_REFRESH_TOKEN: ${{ secrets.DROPBOX_REFRESH_TOKEN }}
         run: python dropbox_sync.py download
 
-        - name: Fetch AIFS (до 10 заходов)
+      - name: Fetch AIFS (до 10 заходов)
         shell: bash -l {0}
         run: |
           ok=0
