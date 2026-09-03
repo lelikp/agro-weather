@@ -1,0 +1,74 @@
+name: daily-forecast
+
+on:
+  schedule:
+    - cron: "30 14 * * *"
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup micromamba (eccodes + cfgrib)
+        uses: mamba-org/setup-micromamba@v3
+        with:
+          environment-name: agro-env
+          create-args: >-
+            python=3.11
+            eccodes=2.44.0
+            cfgrib>=0.9.15.1
+            -c conda-forge
+          cache-environment: true
+          init-shell: bash
+
+      - name: Install pip dependencies
+        shell: bash -l {0}
+        run: |
+          python -c "import eccodes, cfgrib; print('eccodes + cfgrib OK')"
+          pip install -r requirements.txt
+
+      - name: Prepare folders
+        shell: bash -l {0}
+        run: mkdir -p data/raw data/processed output
+
+      - name: Download DB from Dropbox
+        shell: bash -l {0}
+        env:
+          DROPBOX_APP_KEY: ${{ secrets.DROPBOX_APP_KEY }}
+          DROPBOX_APP_SECRET: ${{ secrets.DROPBOX_APP_SECRET }}
+          DROPBOX_REFRESH_TOKEN: ${{ secrets.DROPBOX_REFRESH_TOKEN }}
+        run: python dropbox_sync.py download
+
+      - name: Fetch AIFS
+        shell: bash -l {0}
+        run: python src/fetch_aifs.py
+
+      - name: Process grid
+        shell: bash -l {0}
+        run: python process_grib.py
+
+      - name: Aggregate
+        shell: bash -l {0}
+        run: python aggregate_and_save.py
+
+      - name: Alerts
+        shell: bash -l {0}
+        run: python src/generate_alerts.py
+
+      - name: Post to Telegram
+        shell: bash -l {0}
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        run: python post_telegram.py
+
+      - name: Upload DB to Dropbox
+        if: success()
+        shell: bash -l {0}
+        env:
+          DROPBOX_APP_KEY: ${{ secrets.DROPBOX_APP_KEY }}
+          DROPBOX_APP_SECRET: ${{ secrets.DROPBOX_APP_SECRET }}
+          DROPBOX_REFRESH_TOKEN: ${{ secrets.DROPBOX_REFRESH_TOKEN }}
+        run: python dropbox_sync.py upload

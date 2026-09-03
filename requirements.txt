@@ -1,0 +1,6 @@
+pandas
+numpy
+requests
+pyyaml
+xarray
+ecmwf-opendata
