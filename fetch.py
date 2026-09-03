@@ -42,7 +42,7 @@ def get_latest_12z_run():
     else:
         return (now_utc - timedelta(days=1)).strftime("%Y%m%d"), 12
 
-def download_step(run_date: str, run_time: int, step: int, max_retries: int = 5) -> bool:
+def download_step(run_date: str, run_time: int, step: int, max_retries: int = 6) -> bool:
     """Скачивает один шаг прогноза с поддержкой повторов при 503."""
     url = (f"{BASE_URL}/{run_date}/{run_time:02d}z/"
            f"aifs-single/0p25/oper/"
