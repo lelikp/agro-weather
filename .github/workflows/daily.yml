@@ -8,7 +8,7 @@ on:
 jobs:
   run:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 180
     steps:
       - uses: actions/checkout@v4
 
@@ -42,9 +42,16 @@ jobs:
           DROPBOX_REFRESH_TOKEN: ${{ secrets.DROPBOX_REFRESH_TOKEN }}
         run: python dropbox_sync.py download
 
-      - name: Fetch AIFS
+      - name: Fetch AIFS (до 3 заходов)
         shell: bash -l {0}
-        run: python fetch.py
+        run: |
+          ok=0
+          for i in 1 2 3; do
+            if python fetch.py; then ok=1; break; fi
+            echo "Заход $i не собрал комплект, ждём 180 секунд"
+            sleep 180
+          done
+          if [ "$ok" != 1 ]; then echo "Комплект не собран за 3 захода"; exit 1; fi
 
       - name: Process grid
         shell: bash -l {0}

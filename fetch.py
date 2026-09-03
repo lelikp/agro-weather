@@ -16,6 +16,11 @@ from datetime import datetime, timedelta
 
 import time
 
+import os
+
+# На GitHub (CI=true) не печатаем прогресс-бар: каждый тик становится отдельной строкой лога
+QUIET = os.environ.get("CI") == "true"
+
 # Настройка логирования
 logging.basicConfig(
     level=logging.INFO,
@@ -65,7 +70,7 @@ def download_step(run_date: str, run_time: int, step: int, max_retries: int = 5)
                         if chunk:
                             f.write(chunk)
                             downloaded += len(chunk)
-                            if total > 0:
+                            if total > 0 and not QUIET:
                                 pct = downloaded / total * 100
                                 bar = "█" * int(pct / 5) + "░" * (20 - int(pct / 5))
                                 sys.stdout.write(f"\r   📥 [{bar}] {pct:5.1f}% ({downloaded/1024/1024:.1f}/{total/1024/1024:.1f} MB)")
