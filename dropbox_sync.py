@@ -10,7 +10,7 @@ def token():
         "grant_type": "refresh_token", "refresh_token": REFRESH,
         "client_id": KEY, "client_secret": SECRET})
     print(f"Status: {r.status_code}")
-    print(f"Response: {r.text}")
+
     r.raise_for_status()
     return r.json()["access_token"]
 
